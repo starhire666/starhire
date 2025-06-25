@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StarHire - 招聘</title>
+  <style>
+    /* 基础重置和字体 */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0; padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* 顶部导航 */
+    .header {
+      position: sticky;
+      top: 0; z-index: 1000;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 24px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-bottom: 1px solid #ddd;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 30px;
+      user-select: none;
+    }
+    .star { color: #007bff; }
+    .hire { color: #000; }
+    .apply-btn {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 28px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.3s;
+    }
+    .apply-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* 头部区域 */
+    .hero {
+      position: relative;
+      padding: 100px 20px;
+      color: #fff;
+      text-align: center;
+      background: url('https://i.imgur.com/Vd2y8Q4.jpeg') center/cover no-repeat;
+      box-shadow: inset 0 0 0 2000px rgba(0,0,0,0.35);
+    }
+    .hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.75);
+    }
+    .hero p {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    }
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .hero-buttons button {
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 12px 28px;
+      cursor: pointer;
+      border: 2px solid;
+      transition: all 0.3s ease;
+      min-width: 120px;
+    }
+    .hero-buttons .apply {
+      background: #fff;
+      color: #007bff;
+      border-color: #fff;
+    }
+    .hero-buttons .apply:hover {
+      background: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+    .hero-buttons .learn {
+      background: transparent;
+      color: #fff;
+      border-color: #fff;
+    }
+    .hero-buttons .learn:hover {
+      background: #fff;
+      color: #2c3e50;
+    }
+
+    /* 公司介绍 */
+    .company-info {
+      position: relative;
+      background: url('https://i.imgur.com/jDrIPt1.jpeg') center/cover no-repeat;
+      padding: 80px 20px;
+      color: #fff;
+      text-align: center;
+    }
+    .company-info::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 0;
+    }
+    .company-info h2,
+    .company-info p {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      z-index: 1;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    }
+    .company-info h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .company-info p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* 招聘区整体 */
+    .jobs {
+      max-width: 1200px;
+      margin: 0 auto 0 auto; /* 去掉上下margin空白 */
+      padding: 50px 20px 60px 20px; /* 适当缩减padding */
+      color: #2c3e50;
+      text-align: center;
+
+      /* 背景图 */
+      background: url('https://i.imgur.com/NCCZhKx.jpeg') center center no-repeat;
+      background-size: cover;
+    }
+
+    /* 招聘标题和副标题 */
+    .jobs h2 {
+      font-weight: 900;
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .jobs .subtitle {
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 35px;
+      color: #2c3e50;
+    }
+
+    /* 标签行 */
+    .tag-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .tag {
+      font-weight: 700;
+      font-size: 17px;
+      padding: 10px 26px;
+      border-radius: 30px;
+      border: 2px solid;
+      background-color: transparent;
+      backdrop-filter: blur(5px);
+      white-space: nowrap;
+      user-select: none;
+      transition: 0.3s;
+    }
+    .purple { color: #8e44ad; border-color: #8e44ad; }
+    .blue { color: #007bff; border-color: #007bff; }
+    .lightblue { color: #5dade2; border-color: #5dade2; }
+    .cyan { color: #1abc9c; border-color: #1abc9c; }
+    .pink { color: #e91e63; border-color: #e91e63; }
+
+    /* 保证“Daily or Weekly Pay”和“Risk-Free Earnings”同一行且外框合适 */
+    .tag-row.nowrap {
+      flex-wrap: nowrap !important;
+      justify-content: center;
+    }
+
+    /* 职位列表布局 */
+    .job-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    /* 职位卡通用样式 */
+    .job-card {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 28px 30px 32px;
+      width: 320px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+      color: #333;
+      transition: transform 0.3s ease;
+      text-align: left;
+    }
+    .job-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    /* 前端开发岗位放大 */
+    .job-card.frontend {
+      width: 400px;
+    }
+    .job-card.frontend .rate {
+      color: #e67e22;
+      font-weight: 900;
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+    .job-card.frontend .position {
+      font-weight: 900;
+      color: #000;
+      font-size: 26px;
+      margin-bottom: 26px;
+    }
+    .job-card.frontend .photo-box {
+      width: 100%;
+      height: 240px;
+      background-color: #f0f0f0;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 26px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .job-card.frontend .photo-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      user-select: none;
+    }
+    .job-card.frontend .work-type {
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 18px;
+      font-size: 20px;
+    }
+    .job-card.frontend ol {
+      padding-left: 24px;
+      margin: 0;
+      color: #555;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    /* 其他职位 */
+    .job-card h3 {
+      font-size: 22px;
+      margin-bottom: 18px;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    .job-card p {
+      font-size: 15px;
+      color: #7f8c8d;
+      margin-bottom: 24px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .job-card button {
+      padding: 12px 26px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-weight: 700;
+      font-size: 16px;
+      user-select: none;
+    }
+    .job-card button:hover {
+      background-color: #34495e;
+    }
+
+    /* 申请表单 */
+    .application-form {
+      padding: 50px 20px 60px 20px; /* 缩减内边距保持紧凑 */
+      text-align: center;
+      color: #2c3e50;
+
+      /* 背景图 */
+      background: url('https://i.imgur.com/NCCZhKx.jpeg') center center no-repeat;
+      background-size: cover;
+    }
+    .application-form h2 {
+      font-size: 30px;
+      margin-bottom: 36px;
+      font-weight: 900;
+    }
+    .form-container {
+      display: inline-block;
+      text-align: left;
+      max-width: 520px;
+      background-color: #fff;
+      padding: 36px 28px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      color: #333;
+    }
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border: 1.5px solid #ddd;
+      border-radius: 6px;
+      font-size: 17px;
+      font-weight: 700;
+      user-select: text;
+    }
+    .form-container button {
+      padding: 14px 34px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 6px;
+      width: 100%;
+      transition: background-color 0.3s ease;
+      font-weight: 900;
+      user-select: none;
+    }
+    .form-container button:hover {
+      background-color: #34495e;
+    }
+
+    /* 页脚 */
+    .footer {
+      background-color: #2c3e50;
+      color: #fff;
+      text-align: center;
+      padding: 22px 10px;
+      font-weight: 700;
+    }
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 12px;
+      user-select: none;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .job-card.frontend {
+        width: 100%;
+      }
+      .job-card {
+        width: 100%;
+      }
+    }
+    @media (max-width: 768px) {
+      .hero {
+        padding: 80px 16px;
+      }
+      .hero h1 {
+        font-size: 28px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+      .jobs h2 {
+        font-size: 28px;
+      }
+      .jobs .subtitle {
+        font-size: 18px;
+      }
+      .tag {
+        font-size: 15px;
+        padding: 8px 18px;
+      }
+      .tag-row.nowrap {
+        flex-wrap: nowrap !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 24px;
+      }
+      .apply-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+      .hero-buttons .apply,
+      .hero-buttons .learn {
+        font-size: 14px;
+        padding: 10px 22px;
+      }
+      .hero h1 {
+        font-size: 24px;
+      }
+      .hero p {
+        font-size: 14px;
+      }
+      .jobs h2 {
+        font-size: 24px;
+      }
+      .jobs .subtitle {
+        font-size: 16px;
+      }
+      .tag {
+        font-size: 14px;
+        padding: 6px 16px;
+      }
+      .job-card.frontend .rate {
+        font-size: 20px;
+      }
+      .job-card.frontend .position {
+        font-size: 22px;
+      }
+      .job-card.frontend .photo-box {
+        height: 180px;
+        font-size: 16px;
+      }
+      .job-card.frontend .work-type {
+        font-size: 16px;
+      }
+      .job-card.frontend ol {
+        font-size: 15px;
+      }
+      .job-card h3 {
+        font-size: 18px;
+      }
+      .job-card p {
+        font-size: 14px;
+      }
+      .job-card button {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+      .application-form h2 {
+        font-size: 26px;
+      }
+      .form-container {
+        padding: 28px 20px;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部导航 -->
+  <header class="header">
+    <div class="logo"><span class="star">Star</span><span class="hire">Hire</span></div>
+    <button class="apply-btn" onclick="window.location.href='#apply-form'">Apply</button>
+  </header>
+
+  <!-- 头部区域 -->
+  <section class="hero">
+    <h1>We Offer Numerous <span class="blue">High-Paying Online Positions</span> with Flexible Remote Work Options</h1>
+    <p>No risk, get paid instantly, and make <span class="blue">150-300 EUR</span> Per Day!</p>
+    <div class="hero-buttons">
+      <button class="apply" onclick="window.location.href='#apply-form'">Apply</button>
+      <button class="learn" onclick="window.location.href='#jobs'">Learn More</button>
+    </div>
+  </section>
+
+  <!-- 公司介绍 -->
+  <section class="company-info">
+    <h2>Starhire Offers A Wide Range Of Remote Online Job Opportunities.</h2>
+    <p>At Starhire, we connect talented professionals with remote work opportunities, providing a seamless platform for job seekers and employers to efficiently match skills and roles for successful career growth.</p>
+  </section>
+
+  <!-- 招聘职位 -->
+  <main class="jobs" id="jobs">
+    <h2>We're Hiring For Part-Time And Full-Time Roles!</h2>
+    <p class="subtitle">Immediate Vacancy Available For You To Start Right Away.</p>
+
+    <div class="tag-row">
+      <span class="tag purple">Remote Work</span>
+      <span class="tag blue">High Income</span>
+    </div>
+
+    <div class="tag-row nowrap">
+      <span class="tag lightblue">Daily or Weekly Pay</span>
+      <span class="tag cyan">Risk-Free Earnings</span>
+    </div>
+
+    <div class="tag-row" style="justify-content: center;">
+      <span class="tag pink">Part-time / Full-time</span>
+    </div>
+
+    <!-- 职位卡列表 -->
+    <div class="job-list">
+      <article class="job-card frontend" aria-label="E-commerce Operations Job">
+        <div class="rate">30 - 60 EUR /Hour</div>
+        <div class="position">E-commerce Operations</div>
+        <div class="photo-box">
+          <img src="https://i.imgur.com/C4VWDKP.png" alt="E-commerce Operations Photo" />
+        </div>
+        <div class="work-type">Part-time / Full-time:</div>
+        <ol>
+          <li>Responsible for the daily operation of the online store.</li>
+          <li>Implement online sales strategies.</li>
+          <li>Monitor platform data and sales performance.</li>
+          <li>Work remotely from home.</li>
+        </ol>
+      </article>
+
+      <article class="job-card frontend" aria-label="Digital Marketing Job">
+        <div class="rate">40 - 80 EUR /Hour</div>
+        <div class="position">Digital Marketing</div>
+        <div class="photo-box">
+          <img src="https://i.imgur.com/QHpgMPC.png" alt="Digital Marketing Photo" />
+        </div>
+        <div class="work-type">Part-time / Full-time:</div>
+        <ol>
+          <li>Implement digital marketing strategies.</li>
+          <li>Responsible for content posting on social media.</li>
+          <li>Optimize SEO and SEM strategies.</li>
+          <li>Work remotely from home.</li>
+        </ol>
+      </article>
+
+      <article class="job-card frontend" aria-label="Product Review Job">
+        <div class="rate">20 - 40 EUR /Hour</div>
+        <div class="position">Product Review</div>
+        <div class="photo-box">
+          <img src="https://i.imgur.com/XsIKBL7.png" alt="Product Review Photo" />
+        </div>
+        <div class="work-type">Part-time / Full-time:</div>
+        <ol>
+          <li>Write detailed and objective product usage reviews.</li>
+          <li>Take product photos or videos.</li>
+          <li>Create reviews with both text and images.</li>
+          <li>Work remotely from home.</li>
+        </ol>
+      </article>
+    </div>
+  </main>
+	<!-- 用户好评区域 -->
+<section class="testimonials">
+  <h2 class="testimonial-title">What Our Users Are Saying</h2>
+  <div class="testimonial-wrapper" id="testimonialWrapper">
+    <!-- JavaScript 自动插入用户评论 -->
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    background: #f2f4f8;
+    padding: 60px 20px;
+    overflow-x: auto;
+    text-align: center;
+  }
+
+  .testimonial-title {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 40px;
+    color: #2c3e50;
+  }
+
+  .testimonial-wrapper {
+    display: flex;
+    gap: 20px;
+    transition: 0.3s;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    padding-bottom: 20px;
+  }
+
+  .testimonial-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    min-width: 280px;
+    max-width: 320px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    position: relative;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+
+  .testimonial-card::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 30px;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-top-color: #fff;
+  }
+
+  .testimonial-content {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testimonial-footer img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .testimonial-footer .info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .testimonial-footer .name {
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .testimonial-footer .stars {
+    color: #f39c12;
+    font-size: 16px;
+  }
+</style>
+
+<script>
+  const testimonials = [
+    {
+      name: "Emma Johnson",
+      photo: "https://randomuser.me/api/portraits/women/44.jpg",
+      text: "This job changed my life! I can finally work from anywhere and still earn a great income.",
+    },
+    {
+      name: "Liam Smith",
+      photo: "https://randomuser.me/api/portraits/men/33.jpg",
+      text: "Very flexible working hours and the team is super helpful. Highly recommended!",
+    },
+    {
+      name: "Olivia Brown",
+      photo: "https://randomuser.me/api/portraits/women/65.jpg",
+      text: "I was able to start earning the same week I applied. Fast and efficient process!",
+    },
+    {
+      name: "Noah Williams",
+      photo: "https://randomuser.me/api/portraits/men/52.jpg",
+      text: "Perfect for students or anyone looking for part-time income from home.",
+    },
+    {
+      name: "Ava Taylor",
+      photo: "https://randomuser.me/api/portraits/women/72.jpg",
+      text: "Super convenient! I get paid weekly and can set my own schedule.",
+    },
+    {
+      name: "James Lee",
+      photo: "https://randomuser.me/api/portraits/men/76.jpg",
+      text: "The work is simple, and the support team is always there to help if needed.",
+    },
+    {
+      name: "Sophia Davis",
+      photo: "https://randomuser.me/api/portraits/women/22.jpg",
+      text: "I've tried several online jobs before, but this is the most professional and consistent.",
+    },
+    {
+      name: "Lucas Moore",
+      photo: "https://randomuser.me/api/portraits/men/87.jpg",
+      text: "Really enjoy the freedom and pay. It's legit and easy to get started.",
+    },
+    {
+      name: "Isabella Clark",
+      photo: "https://randomuser.me/api/portraits/women/14.jpg",
+      text: "Great way to earn extra income on the side. I love how smooth everything is!",
+    }
+  ];
+
+  const wrapper = document.getElementById('testimonialWrapper');
+
+  testimonials.forEach(t => {
+    const stars = '★'.repeat(Math.floor(Math.random() * 2) + 4); // 4~5 星
+    wrapper.innerHTML += `
+      <div class="testimonial-card">
+        <div class="testimonial-content">${t.text}</div>
+        <div class="testimonial-footer">
+          <img src="${t.photo}" alt="${t.name}" />
+          <div class="info">
+            <span class="name">${t.name}</span>
+            <span class="stars">${stars}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+</script>
+
+<!-- 申请表单 -->
+<section class="application-form" id="apply-form">
+  <h2>Apply Now</h2>
+  <form id="jobForm" class="form-container" action="YOUR_BACKEND_URL" method="POST" novalidate>
+    <input type="text" name="entry.324585189" placeholder="Full Name" required />
+    
+    <select name="entry.200567531" required>
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+
+    <input type="email" name="entry.226340774" placeholder="Email Address" required />
+
+    <input type="tel" id="phoneInput" name="entry.809040724" placeholder="+372 Phone Number" required />
+
+    <button type="submit">Submit Application</button>
+  </form>
+</section>
+
+<style>
+  #phoneInput {
+    width: 300px;
+    padding: 8px 12px;
+    font-size: 16px;
+  }
+</style>
+
+<script>
+  const phoneInput = document.getElementById('phoneInput');
+  const prefix = '+372 '; // 注意这里是带空格的
+
+  // 页面载入时设置默认值（只在空时设置）
+  if (!phoneInput.value) {
+    phoneInput.value = prefix;
+  }
+
+  phoneInput.addEventListener('focus', () => {
+    if (!phoneInput.value.startsWith(prefix)) {
+      phoneInput.value = prefix;
+    }
+    setTimeout(() => {
+      if (phoneInput.selectionStart < prefix.length) {
+        phoneInput.setSelectionRange(prefix.length, prefix.length);
+      }
+    }, 0);
+  });
+
+  phoneInput.addEventListener('keydown', (e) => {
+    const start = phoneInput.selectionStart;
+    // 禁止删除或光标进入前缀部分
+    if (
+      (e.key === 'Backspace' && start <= prefix.length) ||
+      (e.key === 'Delete' && start < prefix.length) ||
+      (e.key === 'ArrowLeft' && start <= prefix.length)
+    ) {
+      e.preventDefault();
+    }
+  });
+
+  phoneInput.addEventListener('click', () => {
+    if (phoneInput.selectionStart < prefix.length) {
+      phoneInput.setSelectionRange(prefix.length, prefix.length);
+    }
+  });
+
+  phoneInput.addEventListener('input', () => {
+    if (!phoneInput.value.startsWith(prefix)) {
+      phoneInput.value = prefix + phoneInput.value.slice(prefix.length);
+      phoneInput.setSelectionRange(prefix.length, prefix.length);
+    }
+  });
+</script>
+  <!-- 成功弹窗 -->
+<!-- 成功弹窗 -->
+<div id="successPopup" style="
+  display:none; 
+  position:fixed; top:0; left:0; right:0; bottom:0; 
+  background:rgba(0,0,0,0.5); 
+  z-index:9999; 
+  align-items:center; justify-content:center;
+  display:none;
+">
+  <div style="background:#fff; padding:30px; border-radius:10px; text-align:center; position: relative;">
+    <div style="width:60px; height:60px; border-radius:50%; background:#4CAF50; color:white; font-size:36px; line-height:60px; margin:0 auto;">✓</div>
+    <p style="margin-top:20px; font-weight:bold;">
+      We’ve received your application.<br>
+      Our team will contact you shortly.<br>Thank you!
+    </p>
+    <button id="closePopupBtn" style="margin-top:20px; padding:8px 20px; cursor:pointer;">Close</button>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('jobForm');
+  const popup = document.getElementById('successPopup');
+  const closeBtn = document.getElementById('closePopupBtn');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); // 阻止默认提交
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true; // 防止重复提交
+
+    const formData = new FormData(form);
+
+    fetch('https://docs.google.com/forms/d/e/1FAIpQLScKhl9mAhJnxz85gR0u1esjMDr6Oy5M8auIi_YRkm0WOdn7hA/formResponse', {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    }).then(() => {
+      popup.style.display = 'flex'; // 显示弹窗
+      form.reset();
+      submitBtn.disabled = false;  // 重新启用按钮
+    }).catch(() => {
+      alert("Submission failed. Please try again.");
+      submitBtn.disabled = false;  // 重新启用按钮
+    });
+  });
+
+  closeBtn.addEventListener('click', () => {
+    popup.style.display = 'none'; // 关闭弹窗
+  });
+</script>
+
+</script>
+
+<style>
+.application-form {
+  background: #fff;
+  padding: 40px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.application-form h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+  color: #333;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-container input,
+.form-container select {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.form-container button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+</style>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+<!-- 原代码基础上，最后部分补上了闭合的 </footer> 和 </html> 标签 -->
+<!-- 页脚 -->
+<footer class="footer">
+  <p>&copy; 2025 StarHire |
+    <a href="#" onclick="openModal('privacy')">Privacy Policy</a> |
+    <a href="#" onclick="openModal('terms')">Terms & Conditions</a> |
+    <a href="#" onclick="openModal('about')">About Us</a>
+  </p>
+</footer>
+
+<!-- 弹窗 -->
+<div id="modalOverlay" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <div id="modalBody">
+      <!-- 弹窗内容会动态插入这里 -->
+    </div>
+  </div>
+</div>
+
+<!-- 样式 -->
+<style>
+  .footer {
+    background: #111;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+  }
+  .footer a {
+    color: #00aaff;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  .footer a:hover {
+    text-decoration: underline;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-content {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 22px;
+    color: #888;
+    cursor: pointer;
+  }
+  .close-btn:hover {
+    color: #000;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  @media (max-width: 600px) {
+    .modal-content {
+      padding: 20px;
+    }
+  }
+</style>
+
+<!-- 脚本 -->
+<script>
+  function openModal(type) {
+    const modal = document.getElementById('modalOverlay');
+    const body = document.getElementById('modalBody');
+    
+    let content = '';
+    if (type === 'privacy') {
+      content = `
+        <h2>Privacy Policy</h2>
+        <p>StarHire values your privacy. We only collect information necessary for recruitment purposes and do not share your data with third parties without your consent.</p>
+      `;
+    } else if (type === 'terms') {
+      content = `
+        <h2>Terms & Conditions</h2>
+        <p>By using StarHire, you agree to provide accurate information and use our services solely for employment-related purposes. We reserve the right to modify or suspend access at our discretion.</p>
+      `;
+    } else if (type === 'about') {
+      content = `
+        <h2>About StarHire</h2>
+        <p>StarHire is a recruitment company focused on matching professionals with high-paying remote opportunities. We believe in flexibility, transparency, and empowering talent worldwide.</p>
+      `;
+    }
+
+    body.innerHTML = content;
+    modal.style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').style.display = 'none';
+  }
+
+  // 允许点击背景关闭弹窗
+  window.onclick = function(event) {
+    const modal = document.getElementById('modalOverlay');
+    if (event.target === modal) {
+      closeModal();
+    }
+  
+  };
+</script>
